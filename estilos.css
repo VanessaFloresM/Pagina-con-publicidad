@@ -1,0 +1,248 @@
+   /* Estilo general */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(45deg, #1a237e, #1565c0);
+      background-size: 400% 400%;
+      animation: gradientMotion 5s ease infinite;
+    }
+
+    @keyframes gradientMotion {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* Bloques de publicidad (Cards) */
+    .ad-card {
+      width: 25%;
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #f0f0f0; /* Fondo claro si no se establece una imagen */
+      animation: zoomMotion 5s ease infinite;
+    }
+
+    @keyframes zoomMotion {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* Bloque de publicidad izquierda */
+    .ad-card.left {
+      background-image: url(../../Downloads/Arcane%202.jpg);
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Bloque de publicidad derecha */
+    .ad-card.right {
+      background-image: url(../../Downloads/F1.jpg);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .ad-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .ad-content h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .ad-content p {
+      margin: 10px 0;
+    }
+
+    .ad-content button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .ad-content button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Contenedor principal */
+    .calculator {
+      width: 50%;
+      background: #000;
+      color: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      animation: backgroundMotion 5s ease infinite;
+    }
+
+    @keyframes backgroundMotion {
+      0% { background-color: #000; }
+      50% { background-color: #444; }
+      100% { background-color: #000; }
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+.ad-top {
+  position: fixed;
+  top: 10px; /* Mueve la capa superior 10px desde la parte superior */
+  left: 10px; /* Mueve la capa superior 10px desde la izquierda */
+  width: 250px; /* Ancho de los cuadrados */
+  height: 200px; /* Alto de los cuadrados */
+  background: url(Coppel.gif) no-repeat center center; /* Fondo específico para la parte superior */
+  background-size: cover; /* Hace que la imagen cubra todo el espacio */
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  animation: fadeInAnimation 10s ease-out infinite; /* Animación */
+}
+
+.ad-bottom {
+  position: fixed;
+  bottom: 10px; 
+  right: 10px; 
+  width: 250px;
+  height: 200px; 
+  background: url(Pacman.gif)no-repeat center center; 
+  background-size: cover;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  animation: fadeInAnimation 10s ease-out infinite; 
+}
+
+.ad-middle {
+  position: fixed;
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  width: 250px; 
+  height: 200px;
+  background: url(Compras.gif) no-repeat center center;
+  background-size: cover; 
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  animation: fadeInAnimation 5s ease-out infinite; 
+}
+
+
+
+
+/* Animación para las capas de publicidad */
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+.ad-content h2, .ad-content p {
+  margin: 0;
+  text-align: center;
+  font-size: 14px;
+  color: white;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7); /* Sombras para mejorar la legibilidad */
+}
+
+.ad-content button {
+  padding: 5px 10px;
+  font-size: 12px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin: 5px 0;
+}
+
+.ad-content button:hover {
+  background-color: #0056b3;
+}
+
+.close-btn {
+  padding: 5px 10px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  width: 100%;
+}
+
+.close-btn:hover {
+  background: darkred;
+}
+
+
+
+

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Financiamiento</title>
+    <link rel="stylesheet" href="estilos.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1>Calculadora de Financiamiento</h1>
+    <form id="financiamientoForm">
+        <label for="monto">Monto de la compra:</label>
+        <input type="number" id="monto" name="monto" min="1" required>
+        <button type="button" id="calcularBtn">Calcular</button>
+    </form>
+    <h2>Resultados:</h2>
+    <table id="resultados">
+        <thead>
+            <tr>
+                <th>Tipo de financiamiento</th>
+                <th>Monto de la factura</th>
+                <th>Monto de los intereses</th>
+                <th>Nuevo monto de la factura</th>
+                <th>Monto de la cuota inicial</th>
+                <th>Monto de cada letra</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <canvas id="resultadosChart"></canvas>
+</div>
+
+<div class="ad" id="publicidad">
+    Tramita tu crédito hipotecario ahora mismo. ¡No pierdas más tiempo!
+    <button id="cerrarAd">Quitar publicidad</button>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var tiposFinanciamiento = [
+            { tipo: 1, interes: 5, cuotaInicial: 60, letras: 2 },
+            { tipo: 2, interes: 10, cuotaInicial: 50, letras: 4 },
+            { tipo: 3, interes: 15, cuotaInicial: 35, letras: 6 }
+        ];
+
+        $("#cerrarAd").click(function () {
+            $("#publicidad").fadeOut("slow");
+        });
+
+        $("#calcularBtn").click(function () {
+            var montoCompra = parseFloat($("#monto").val());
+            if (!isNaN(montoCompra) && montoCompra > 0) {
+                var resultados = calcularFinanciamiento(montoCompra);
+                mostrarResultados(resultados);
+                generarGrafica(resultados);
+            } else {
+                alert("Por favor, introduce un monto válido.");
+            }
+        });
+
+        function calcularFinanciamiento(montoCompra) {
+            var impuesto = montoCompra * 0.1;
+            var montoFactura = montoCompra + impuesto;
+
+            var resultados = [];
+            for (var i = 0; i < tiposFinanciamiento.length; i++) {
+                var tipo = tiposFinanciamiento[i];
+                var intereses = (tipo.interes / 100) * montoFactura;
+                var nuevoMontoFactura = montoFactura + intereses;
+                var cuotaInicial = (tipo.cuotaInicial / 100) * nuevoMontoFactura;
+                var montoPorLetra = (nuevoMontoFactura - cuotaInicial) / tipo.letras;
+
+                resultados.push({
+                    tipo: tipo.tipo,
+                    montoFactura: montoFactura,
+                    intereses: intereses,
+                    nuevoMontoFactura: nuevoMontoFactura,
+                    cuotaInicial: cuotaInicial,
+                    montoPorLetra: montoPorLetra
+                });
+            }
+
+            return resultados;
+        }
+
+        function mostrarResultados(resultados) {
+            var tbody = $("#resultados tbody");
+            tbody.empty();
+            for (var i = 0; i < resultados.length; i++) {
+                var res = resultados[i];
+                tbody.append(
+                    <tr>
+                        <td>${res.tipo}</td>
+                        <td>${res.montoFactura.toFixed(2)}</td>
+                        <td>${res.intereses.toFixed(2)}</td>
+                        <td>${res.nuevoMontoFactura.toFixed(2)}</td>
+                        <td>${res.cuotaInicial.toFixed(2)}</td>
+                        <td>${res.montoPorLetra.toFixed(2)}</td>
+                    </tr>
+                );
+            }
+        }
+
+        function generarGrafica(resultados) {
+            var ctx = document.getElementById('resultadosChart').getContext('2d');
+            var labels = [];
+            var data = [];
+
+            for (var i = 0; i < resultados.length; i++) {
+                labels.push("Tipo " + resultados[i].tipo);
+                data.push(resultados[i].nuevoMontoFactura);
+            }
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Nuevo monto de la factura',
+                        data: data,
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Gráfica de resultados'
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
